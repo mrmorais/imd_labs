@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="end|bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="#1300EA"
+            android:src="@android:drawable/ic_menu_add"
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="4dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/home_screen_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            android:title="@string/laboratorios_imd_str"
+            android:titleTextColor="@android:color/white">
+            <TextView
+                android:text="@string/laboratorios_imd_str"
+                android:textAppearance="@android:style/TextAppearance.Theme"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/chamados_abertos_str"
+            />
+
+        <!--<ListView android:id="@+id/tickets_home_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--&gt;-->
+            <!---->
+        <!--</ListView>-->
+        <LinearLayout
+            android:paddingStart="20dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- indicator balloon -->
+            <android.support.design.widget.FloatingActionButton
+                android:background="@color/colorGreenInfo"
+                android:elevation="0dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <!-- ticket info -->
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:text="Computador IMD-A201-4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="12sp"
+                    android:text="Correção efetuada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
