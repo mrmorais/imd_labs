@@ -26,6 +26,8 @@
             android:textSize="19sp" />
 
         <Button
+            android:id="@+id/how_it_works_btn"
+            android:onClick="openHowItWorksDialog"
             style="@android:style/Widget.Material.Button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -45,20 +47,16 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
             android:fontFamily="@font/roboto"
-            android:hint="@string/username_hint"
+            android:hint="@string/email_hint"
             android:singleLine="true"
             android:textSize="16sp" />
 
-        <EditText
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/roboto"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            />
+        <TextView
+            android:text="@string/why_my_mail_label"
+            android:onClick="openWhyMyMail"
+            android:textColor="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <Button
             android:layout_marginTop="20dp"

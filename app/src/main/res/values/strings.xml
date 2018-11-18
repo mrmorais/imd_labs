@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Laboratórios IMD</string>
     <string name="home_presentation">REPORTE PROBLEMAS EM COMPUTADORES DOS LABORATÓRIOS DO IMD</string>
-    <string name="how_it_works">COMO FUNCIONA?</string>
-    <string name="username_hint">Nome de usuário</string>
-    <string name="password_hint">Senha</string>
+    <string name="how_it_works">Como funciona?</string>
+    <string name="email_hint">E-mail</string>
     <string name="enter">Entrar</string>
     <string name="title_computer_identifying">Identificação do Aparelho</string>
     <string name="info_computer_identifying">Procure no gabinete do computador a sua identificação: um código de barras com número patrimonial. Se o computador estiver ligando, pode informar o nome do computador que deverá aparecer em algum lugar na tela.</string>
@@ -17,4 +16,7 @@
     <string name="problem_definition_description">Selecione o item que melhor descreve o seu problema com este aparelho</string>
     <string name="title_complementary_information_screen">Informação Complementar</string>
     <string name="complementary_information_screen_description">Existe alguma informação necessária para reproduzir o problema? Deixe-a aqui</string>
+    <string name="dialog_how_it_works_body">Quando você abre uma solicitação de suporte nós te ajudamos a localizar o computador defeituoso e, preliminarmente, identificar qual possível defeito. Por fim, enviaremos, em seu nome, um e-mail para a Diretoria de TI do Metrópole Digital reportando o defeito.</string>
+    <string name="why_my_mail_label">Por que meu e-mail?</string>
+    <string name="why_my_mail_body">A forma de autenticação será seu e-mail. Te enviaremos um link para liberação do acesso, assim não será necessário criação de uma conta com usuário e senha, seu e-mail é suficiente.</string>
 </resources>
