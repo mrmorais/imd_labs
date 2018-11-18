@@ -43,6 +43,7 @@
         android:padding="20dp">
 
         <EditText
+            android:id="@+id/email_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimaryDark"
@@ -59,6 +60,7 @@
             android:layout_height="match_parent" />
 
         <Button
+            android:onClick="sendValidationEmail"
             android:layout_marginTop="20dp"
             style="@android:style/Widget.Material.Button"
             android:textColor="@android:color/white"
