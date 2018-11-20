@@ -6,7 +6,7 @@ import android.content.Intent;
 
 public class AccountUpdateReceiver extends BroadcastReceiver {
     public interface AccountUpdateListenner {
-        public void onAccountUpdate();
+        public void onAccountUpdate(Intent intent);
     }
 
     AccountUpdateListenner listenner;
@@ -19,7 +19,7 @@ public class AccountUpdateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("br.ufrn.imd.laboratorios.ACCOUNT_GRANT")) {
             if (listenner != null) {
-                listenner.onAccountUpdate();
+                listenner.onAccountUpdate(intent);
             }
         }
     }

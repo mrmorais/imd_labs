@@ -27,6 +27,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.ufrn.imd.laboratorios.data.Database;
+
 public class LoginScreen extends AppCompatActivity implements AccountUpdateReceiver.AccountUpdateListenner {
     private EditText emailTextField;
     private AccountUpdateReceiver accountUpdateReceiver;
@@ -34,24 +36,42 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.activity_login_screen); // define layout
 
         emailTextField = findViewById(R.id.email_txt);
+
+        // if user is registered go to next activity
+        if (Database.isUserRegistered(getApplicationContext())) {
+            // TODO go to next activity
+        }
+
+        // enable update receiver
         accountUpdateReceiver = new AccountUpdateReceiver(this);
+        IntentFilter intentFilter = new IntentFilter("br.ufrn.imd.laboratorios.ACCOUNT_GRANT");
+        registerReceiver(accountUpdateReceiver, intentFilter);
 
         createNotificationChannel();
     }
 
+    /**
+     * Open "how it works" dialog
+     */
     public void openHowItWorksDialog(View view) {
         HowItWorksDialog dialog = new HowItWorksDialog();
         dialog.show(getSupportFragmentManager(), "how_it_works_dialog");
     }
 
+    /**
+     * Open "why my mail" dialog
+     */
     public void openWhyMyMail(View view) {
         WhyMyMailDialog dialog = new WhyMyMailDialog();
         dialog.show(getSupportFragmentManager(), "why_my_mail_dialog");
     }
 
+    /**
+     * Trigger a mail sending
+     */
     public void sendValidationEmail(View view) {
         String targetEmail = emailTextField.getText().toString();
 
@@ -63,7 +83,40 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
         }
     }
 
+    /**
+     * Call validating mail sending cloud function
+     * @param email user's email
+     */
+    private void sendValidationEmail(String email) {
+        String fbToken = FirebaseInstanceId.getInstance().getToken(); // It's deprecated
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("uid", fbToken);
+
+        FirebaseFunctions functions = FirebaseFunctions.getInstance();
+        functions
+                .getHttpsCallable("validateUserMail")
+                .call(data)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("FirebaseFunction", "failed");
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
+                    @Override
+                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
+                        Log.d("FirebaseFunction", "success");
+                    }
+                });
+    }
+
+    /**
+     * Create or override notification channel if device API version is greater than or equals to 28
+     */
     private void createNotificationChannel() {
+        // Notification channel is a feature for API 28
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel("main", "Canal padrão de notificação", importance);
@@ -74,51 +127,26 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
         }
     }
 
-    private void sendValidationEmail(String email) {
-        String fbToken = FirebaseInstanceId.getInstance().getToken();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("email", email);
-        data.put("uid", fbToken);
-
-        FirebaseFunctions functions = FirebaseFunctions.getInstance();
-        functions
-            .getHttpsCallable("validateUserMail")
-            .call(data)
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("FirebaseFunction", "failed");
-                }
-            })
-            .addOnSuccessListener(new OnSuccessListener<HttpsCallableResult>() {
-                @Override
-                public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                    Log.d("FirebaseFunction", "success");
-                }
-            });
-    }
-
+    /**
+     * Trigger when receives a Account Grant action
+     */
     @Override
-    public void onAccountUpdate() {
-        Toast.makeText(getApplicationContext(), "Autorização concedida", Toast.LENGTH_LONG).show();
-    }
+    public void onAccountUpdate(Intent intent) {
+        if (Database.isUserRegistered(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "E-mail verificado", Toast.LENGTH_LONG).show();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (accountUpdateReceiver != null) {
-            IntentFilter intentFilter = new IntentFilter("br.ufrn.imd.laboratorios.ACCOUNT_GRANT");
-            registerReceiver(accountUpdateReceiver, intentFilter);
+            // TODO go to next activity
         }
     }
 
+    /**
+     * Unsubscribe account receiver
+     */
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
         if (accountUpdateReceiver != null) {
             unregisterReceiver(accountUpdateReceiver);
         }
+        super.onDestroy();
     }
 }
