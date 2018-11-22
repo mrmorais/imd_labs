@@ -19,4 +19,5 @@
     <string name="dialog_how_it_works_body">Quando você abre uma solicitação de suporte nós te ajudamos a localizar o computador defeituoso e, preliminarmente, identificar qual possível defeito. Por fim, enviaremos, em seu nome, um e-mail para a Diretoria de TI do Metrópole Digital reportando o defeito.</string>
     <string name="why_my_mail_label">Por que meu e-mail?</string>
     <string name="why_my_mail_body">A forma de autenticação será seu e-mail. Te enviaremos um link para liberação do acesso, assim não será necessário criação de uma conta com usuário e senha, seu e-mail é suficiente.</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
 </resources>

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="br.ufrn.imd.laboratorios.LoginScreen">
+        <activity android:name=".LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,11 +26,19 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="main" />
 
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/title_activity_home_screen"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ComputerIdentifying"
+            android:label="ComputerIdentifying"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ProblemDefinition"></activity>
     </application>
 
 </manifest>

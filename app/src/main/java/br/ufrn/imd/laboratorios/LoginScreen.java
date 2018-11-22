@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -40,10 +43,20 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
 
         emailTextField = findViewById(R.id.email_txt);
 
-        // if user is registered go to next activity
-        if (Database.isUserRegistered(getApplicationContext())) {
-            // TODO go to next activity
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .document(FirebaseInstanceId.getInstance().getId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            if (documentSnapshot.getData().get("registered").equals("true")) {
+                                goToHome();
+                            }
+                        }
+                    }
+                });
 
         // enable update receiver
         accountUpdateReceiver = new AccountUpdateReceiver(this);
@@ -76,7 +89,23 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
         String targetEmail = emailTextField.getText().toString();
 
         if (targetEmail.length() > 0 && targetEmail.contains("@") && targetEmail.contains(".com")) {
-            sendValidationEmail(targetEmail);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Map<String, String> user = new HashMap<>();
+            user.put("email", targetEmail);
+            user.put("tokenID", FirebaseInstanceId.getInstance().getToken());
+            user.put("registered", "false");
+
+            db.collection("users")
+                    .document(FirebaseInstanceId.getInstance().getId())
+                    .set(user)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void avoid) {
+                            sendValidationEmail(emailTextField.getText().toString(), FirebaseInstanceId.getInstance().getId());
+                        }
+                    });
+
+
             Toast.makeText(getApplicationContext(), "Enviamos um e-mail para você. Siga os passos descritos lá!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), "E-mail inválido. Por favor, digite corretamente seu e-mail.", Toast.LENGTH_LONG).show();
@@ -87,12 +116,11 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
      * Call validating mail sending cloud function
      * @param email user's email
      */
-    private void sendValidationEmail(String email) {
-        String fbToken = FirebaseInstanceId.getInstance().getToken(); // It's deprecated
+    private void sendValidationEmail(String email, String userId) {
 
         Map<String, Object> data = new HashMap<>();
         data.put("email", email);
-        data.put("uid", fbToken);
+        data.put("uid", userId);
 
         FirebaseFunctions functions = FirebaseFunctions.getInstance();
         functions
@@ -132,11 +160,9 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
      */
     @Override
     public void onAccountUpdate(Intent intent) {
-        if (Database.isUserRegistered(getApplicationContext())) {
-            Toast.makeText(getApplicationContext(), "E-mail verificado", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "E-mail verificado", Toast.LENGTH_LONG).show();
 
-            // TODO go to next activity
-        }
+        goToHome();
     }
 
     /**
@@ -148,5 +174,12 @@ public class LoginScreen extends AppCompatActivity implements AccountUpdateRecei
             unregisterReceiver(accountUpdateReceiver);
         }
         super.onDestroy();
+    }
+
+    private void goToHome() {
+        Intent homeScreenIntent = new Intent(this, HomeScreen.class);
+        startActivity(homeScreenIntent);
+
+        finish();
     }
 }

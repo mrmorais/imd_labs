@@ -24,14 +24,7 @@ public class MessagingService extends FirebaseMessagingService {
             Map data = remoteMessage.getData();
             if (data.get("type").equals("account")) {
                 if (data.get("action").equals("grant")) {
-                    // TODO: enviar email do usuário na validação
-                    String stubEmail = "maradona.morais@hotmail.com";
-                    if (!Database.isUserRegistered(getApplicationContext())) {
-                        Database.registerUser(stubEmail, getApplicationContext());
-                    }
-
                     Intent intent = new Intent();
-                    intent.putExtra("email", stubEmail);
                     intent.setAction("br.ufrn.imd.laboratorios.ACCOUNT_GRANT");
                     sendBroadcast(intent);
                 }

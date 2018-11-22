@@ -12,11 +12,13 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="247dp"
+            android:id="@+id/create_ticket_home_btn"
+            android:onClick="openNewTicket"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="#1300EA"
-            android:src="@android:drawable/ic_menu_add"
+            android:src="@drawable/add"
             app:backgroundTint="@color/colorAccent"
             app:elevation="4dp" />
     </LinearLayout>

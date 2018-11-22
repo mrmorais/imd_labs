@@ -32,11 +32,12 @@
         android:text="@string/problem_definition_description"
         />
 
-    <!--<ListView android:id="@+id/tickets_home_list"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--&gt;-->
-    <!---->
-    <!--</ListView>-->
+    <ListView android:id="@android:id/list"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </ListView>
 
 </LinearLayout>

@@ -30,4 +30,13 @@ public class Database {
 
         return false;
     }
+
+    public static boolean removeUserData(Context context) {
+        UserDBHelper dbHelper = new UserDBHelper(context);
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        sqLiteDatabase.execSQL("DELETE FROM " + UserModel.UserEntry.TABLE_NAME + ";");
+
+        return true;
+    }
 }
