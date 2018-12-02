@@ -53,6 +53,5 @@ public class ComputerIdentifying extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 }

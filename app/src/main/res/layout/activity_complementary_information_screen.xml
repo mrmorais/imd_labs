@@ -60,6 +60,7 @@
         android:textColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:text="@string/ready"
+        android:onClick="submitDetailedInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

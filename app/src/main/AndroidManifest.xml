@@ -39,6 +39,7 @@
             android:label="ComputerIdentifying"
             android:theme="@style/AppTheme" />
         <activity android:name=".ProblemDefinition"></activity>
+        <activity android:name=".MoreDetails"></activity>
     </application>
 
 </manifest>
